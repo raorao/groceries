@@ -71,7 +71,12 @@ Store = (function() {
       })
 
       set({items: items})
-    }
+    },
+
+    load: function(newContents) {
+      console.log('loading new contents', newContents)
+      // set(newContents);
+    },
   }
 })();
 

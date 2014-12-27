@@ -20,5 +20,10 @@ AppAction = {
   CONNECT: 'CONNECT',
   connect: function() {
     Dispatcher.dispatch( { actionType: AppAction.CONNECT } );
+  },
+
+  LOAD: 'LOAD',
+  load: function(contents) {
+    Dispatcher.dispatch( { actionType: AppAction.LOAD, contents: contents } );
   }
 };

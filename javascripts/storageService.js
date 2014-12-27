@@ -8,7 +8,7 @@ StorageService = (function() {
     // request contains lastTransaction(int) value
     console.log('making request to storage service to check for updates');
     // this will only fire if request returns a 200 status code
-    // if(!loaded) { AppAction.load('highestId, lastTransaction, items') };
+    if(!loaded) { AppAction.load('highestId, lastTransaction, items') };
     loaded = true
   };
 

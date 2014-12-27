@@ -12,6 +12,9 @@ Dispatcher.register(function(payload) {
     case AppAction.CONNECT:
       StorageService.connect();
       break;
+    case AppAction.LOAD:
+      Store.load(payload.contents)
+      break;
     default:
       throw new Error("Unknown AppAction actionType: " + payload.actionType);
   }
