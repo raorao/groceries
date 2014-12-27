@@ -5,15 +5,25 @@ ReactElementMixin = {
   li: React.createFactory('li'),
   div: React.createFactory('div'),
   input: React.createFactory('input'),
-  form: React.createFactory('form')
+  form: React.createFactory('form'),
+  span: React.createFactory('span')
 };
 
 Item = (function() {
   return React.createClass({
     mixins: [ReactElementMixin],
+    handleCompletion: function() {
+      AppAction.update(this.props.id, {completed: !this.props.completed} );
+    },
+
     render: function() {
+      var completed = (this.props.completed ? 'completed' : null)
+
       return (
-        this.li({className: 'item'}, this.props.value)
+        this.li({className: 'item ' + completed}, [
+          this.span({ onClick: this.handleCompletion },'complete  '),
+          this.span(null,this.props.value)
+        ])
       )
     }
   });

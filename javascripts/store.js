@@ -9,7 +9,7 @@ Store = (function() {
   var DEFAULT_ITEM = Immutable({
     id: 0,
     value: 'some value',
-    checked: false
+    completed: false
   });
 
   var contents = Immutable({
@@ -28,15 +28,30 @@ Store = (function() {
 
   return {
     getItems: function() { return getItems().asMutable() },
+
     onChangeEvent: function(callback) {
       eventEmitter.bind(CHANGE_EVENT, callback)
     },
+
     create: function(itemValue) {
       var items = getItems();
       var highestId = contents.highestId;
       var item = DEFAULT_ITEM.merge({value: itemValue, id: ++highestId})
 
       set({items: items.concat([item]), highestId: highestId});
+    },
+
+    update: function(id, newAttributes) {
+      var items = getItems()
+      items = items.map(function(item) {
+        if(item.id === id) {
+          return item.merge(newAttributes)
+        } else {
+          return item
+        }
+      })
+
+      set({items: items})
     }
   }
 })();
