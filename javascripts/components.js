@@ -26,10 +26,10 @@ Item = (function() {
     },
 
     render: function() {
-      var completed = (this.props.completed ? 'completed' : null)
+      var klass = (this.props.completed ? 'completed' : '')
 
       return (
-        this.li({className: 'item ' + completed}, [
+        this.li({className: 'item ' + klass}, [
           this.span({ onClick: this.handleCompletion },'complete'),
           this.input({ onBlur: this.handleEdit, ref: 'userInput', defaultValue: this.props.value }),
           this.span({ onClick: this.handleDeletion },'delete'),
