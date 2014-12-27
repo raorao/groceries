@@ -25,7 +25,7 @@ List = (function() {
 Create = (function() {
 
   var changeHandler = function() {
-    alert('this is working')
+    AppAction.create('h')
   };
 
   return React.createClass({
