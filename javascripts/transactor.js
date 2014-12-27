@@ -6,6 +6,8 @@ Transactor = (function() {
     delete: function(id) {
       console.log('transactor registers deletion', arguments)
     },
-    create: function() {}
+    create: function(item) {
+      console.log('transactor registers creation', arguments)
+    }
   }
 })();

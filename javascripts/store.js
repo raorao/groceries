@@ -38,6 +38,8 @@ Store = (function() {
       var highestId = contents.highestId;
       var item = DEFAULT_ITEM.merge({value: itemValue, id: ++highestId})
 
+      Transactor.create(item)
+
       set({items: items.concat([item]), highestId: highestId});
     },
 
