@@ -7,11 +7,13 @@ Store = (function() {
   var CHANGE_EVENT = 'CHANGE_EVENT'
 
   var DEFAULT_ITEM = Immutable({
+    id: 0,
     value: 'some value',
     checked: false
   });
 
   var contents = Immutable({
+    highestId: 0,
     items: []
   });
 
@@ -19,8 +21,8 @@ Store = (function() {
     return contents.items;
   };
 
-  var setItems = function(items) {
-    contents = contents.merge({items: items});
+  var set = function(attributes) {
+    contents = contents.merge(attributes);
     eventEmitter.trigger(CHANGE_EVENT);
   };
 
@@ -31,8 +33,10 @@ Store = (function() {
     },
     create: function(itemValue) {
       var items = getItems();
-      var item = DEFAULT_ITEM.merge({value: itemValue})
-      setItems( items.concat([item]) );
+      var highestId = contents.highestId;
+      var item = DEFAULT_ITEM.merge({value: itemValue, id: ++highestId})
+
+      set({items: items.concat([item]), highestId: highestId});
     }
   }
 })();
