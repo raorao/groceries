@@ -8,6 +8,19 @@ ReactElementMixin = {
   form: React.createFactory('form')
 };
 
+Item = (function() {
+  return React.createClass({
+    mixins: [ReactElementMixin],
+    render: function() {
+      return (
+        this.li({className: 'item'}, this.props.value)
+      )
+    }
+  });
+
+})();
+
+
 List = (function() {
 
   return React.createClass({
@@ -25,12 +38,12 @@ List = (function() {
     },
 
     render: function() {
-      var ul = this.ul
-      var li = this.li
+      var ul = this.ul;
+      var li = this.li;
       return (
         ul( {id: 'list'},
-          this.state.items.map(function(text){
-            return li({className: 'item'}, text)
+          this.state.items.map(function(itemData){
+            return Item(itemData);
           })
         )
       )

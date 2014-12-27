@@ -6,6 +6,11 @@ Store = (function() {
 
   var CHANGE_EVENT = 'CHANGE_EVENT'
 
+  var DEFAULT_ITEM = Immutable({
+    value: 'some value',
+    checked: false
+  });
+
   var contents = Immutable({
     items: []
   });
@@ -26,7 +31,8 @@ Store = (function() {
     },
     create: function(itemValue) {
       var items = getItems();
-      setItems( items.concat([itemValue]) );
+      var item = DEFAULT_ITEM.merge({value: itemValue})
+      setItems( items.concat([item]) );
     }
   }
 })();
