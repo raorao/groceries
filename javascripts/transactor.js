@@ -1,9 +1,11 @@
 Transactor = (function() {
   return {
-    update: function() {
-      console.log(arguments)
+    update: function(id, attributes) {
+      console.log('transactor registers update', arguments)
     },
-    delete: function() {},
+    delete: function(id) {
+      console.log('transactor registers deletion', arguments)
+    },
     create: function() {}
   }
 })();

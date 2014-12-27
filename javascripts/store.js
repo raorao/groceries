@@ -45,7 +45,12 @@ Store = (function() {
       var items = getItems();
 
       items = items.filter(function(item) {
-        return item.id !== id
+        if(item.id !== id) {
+          return true
+        } else {
+          Transactor.delete(id);
+          return false
+        }
       })
 
       set({items: items})
