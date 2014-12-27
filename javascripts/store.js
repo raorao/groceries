@@ -1,4 +1,4 @@
-// requires event emitter
+// requires event emitter, transactor
 
 Store = (function() {
 
@@ -55,7 +55,9 @@ Store = (function() {
       var items = getItems()
       items = items.map(function(item) {
         if(item.id === id) {
-          return item.merge(newAttributes)
+          var newItem = item.merge(newAttributes)
+          if (item !== newItem) { Transactor.update(id, newAttributes) };
+          return newItem
         } else {
           return item
         }
