@@ -13,5 +13,8 @@
   "bugs": {
     "url": "https://github.com/raorao/groceries/issues"
   },
-  "homepage": "https://github.com/raorao/groceries"
+  "homepage": "https://github.com/raorao/groceries",
+  "dependencies": {
+    "express": "^4.10.6"
+  }
 }
