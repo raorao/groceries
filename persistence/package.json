@@ -1,0 +1,17 @@
+{
+  "name": "persistence",
+  "version": "0.1.0",
+  "description": "persistence layer for groceries app",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:raorao/groceries.git"
+  },
+  "author": "srinivas rao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raorao/groceries/issues"
+  },
+  "homepage": "https://github.com/raorao/groceries"
+}
