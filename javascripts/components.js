@@ -1,16 +1,50 @@
 
 ReactElementMixin = {
   ul: React.createFactory('ul'),
-  li: React.createFactory('li')
+  li: React.createFactory('li'),
+  div: React.createFactory('div'),
+  input: React.createFactory('input')
 };
 
-List = React.createClass({
+List = (function() {
+
+  return React.createClass({
+    mixins: [ReactElementMixin],
+    render: function() {
+      return (
+        this.ul( {id: 'list'},
+          this.li({className: 'item'}, "here's some text!")
+        )
+      )
+    }
+  });
+
+})();
+
+
+Create = (function() {
+
+  var changeHandler = function() {
+    alert('this is working')
+  };
+
+  return React.createClass({
+    mixins: [ReactElementMixin],
+    render: function() {
+      return (
+        this.input({id: 'create', onChange: changeHandler})
+      )
+    }
+  });
+
+})();
+
+
+Page = React.createClass({
   mixins: [ReactElementMixin],
   render: function() {
     return (
-      this.ul( {id: 'list'},
-        this.li({className: 'item'}, "here's some text!")
-      )
+      this.div(null,[ List(), Create() ])
     )
   }
 });
