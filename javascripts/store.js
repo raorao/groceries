@@ -27,7 +27,7 @@ Store = (function() {
   };
 
   return {
-    getItems: function() { return getItems().asMutable() },
+    getItems: function() { return getItems().asMutable({deep: true}) },
 
     onChangeEvent: function(callback) {
       eventEmitter.bind(CHANGE_EVENT, callback)
