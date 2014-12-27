@@ -16,13 +16,24 @@ Item = (function() {
       AppAction.update(this.props.id, {completed: !this.props.completed} );
     },
 
+    handleDeletion: function() {
+      AppAction.delete(this.props.id);
+    },
+
+    handleEdit: function() {
+      var itemValue = this.refs.userInput.getDOMNode().value;
+      AppAction.update(this.props.id, {value: itemValue} );
+    },
+
     render: function() {
       var completed = (this.props.completed ? 'completed' : null)
 
       return (
         this.li({className: 'item ' + completed}, [
-          this.span({ onClick: this.handleCompletion },'complete  '),
-          this.span(null,this.props.value)
+          this.span({ onClick: this.handleCompletion },'complete'),
+          this.input({ onBlur: this.handleEdit, ref: 'userInput', defaultValue: this.props.value }),
+          this.span({ onClick: this.handleDeletion },'delete'),
+
         ])
       )
     }
@@ -48,10 +59,8 @@ List = (function() {
     },
 
     render: function() {
-      var ul = this.ul;
-      var li = this.li;
       return (
-        ul( {id: 'list'},
+        this.ul( {id: 'list'},
           this.state.items.map(function(itemData){
             return Item(itemData);
           })

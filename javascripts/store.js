@@ -41,6 +41,16 @@ Store = (function() {
       set({items: items.concat([item]), highestId: highestId});
     },
 
+    delete: function(id) {
+      var items = getItems();
+
+      items = items.filter(function(item) {
+        return item.id !== id
+      })
+
+      set({items: items})
+    },
+
     update: function(id, newAttributes) {
       var items = getItems()
       items = items.map(function(item) {
