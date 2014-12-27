@@ -1,11 +1,15 @@
-List = React.createClass({
-  render: function() {
-    var ul = React.createFactory('ul');
-    var li = React.createFactory('li');
 
+ReactElementMixin = {
+  ul: React.createFactory('ul'),
+  li: React.createFactory('li')
+};
+
+List = React.createClass({
+  mixins: [ReactElementMixin],
+  render: function() {
     return (
-      ul( {id: 'list'},
-        li({className: 'item'}, "here's some text!")
+      this.ul( {id: 'list'},
+        this.li({className: 'item'}, "here's some text!")
       )
     )
   }
