@@ -3,7 +3,8 @@ ReactElementMixin = {
   ul: React.createFactory('ul'),
   li: React.createFactory('li'),
   div: React.createFactory('div'),
-  input: React.createFactory('input')
+  input: React.createFactory('input'),
+  form: React.createFactory('form')
 };
 
 List = (function() {
@@ -24,15 +25,21 @@ List = (function() {
 
 Create = (function() {
 
-  var changeHandler = function() {
-    AppAction.create('h')
-  };
-
   return React.createClass({
     mixins: [ReactElementMixin],
+
+    submitHandler: function(event) {
+      event.preventDefault();
+      var itemValue = this.refs.userInput.getDOMNode().value;
+      AppAction.create(itemValue);
+    },
+
     render: function() {
       return (
-        this.input({id: 'create', onChange: changeHandler})
+        this.form({id: 'create', onSubmit: this.submitHandler}, [
+          this.input({type: 'text', ref: 'userInput'}),
+          this.input({ type: 'submit' })
+        ])
       )
     }
   });
@@ -44,7 +51,7 @@ Page = React.createClass({
   mixins: [ReactElementMixin],
   render: function() {
     return (
-      this.div(null,[ List(), Create() ])
+      this.div(null,[ Create(), List() ])
     )
   }
 });
