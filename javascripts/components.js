@@ -1,3 +1,4 @@
+// requires event emitter, AppAction, Store
 
 ReactElementMixin = {
   ul: React.createFactory('ul'),
@@ -11,10 +12,26 @@ List = (function() {
 
   return React.createClass({
     mixins: [ReactElementMixin],
+    getInitialState: function() {
+      return { items: [] }
+    },
+
+    componentWillMount: function() {
+      Store.onChangeEvent(this.handleStoreChange)
+    },
+
+    handleStoreChange: function() {
+      this.setState({items: Store.getItems()})
+    },
+
     render: function() {
+      var ul = this.ul
+      var li = this.li
       return (
-        this.ul( {id: 'list'},
-          this.li({className: 'item'}, "here's some text!")
+        ul( {id: 'list'},
+          this.state.items.map(function(text){
+            return li({className: 'item'}, text)
+          })
         )
       )
     }
