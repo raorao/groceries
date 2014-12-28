@@ -3,6 +3,7 @@
   "dependencies": {
     "react": "~0.12.0",
     "seamless-immutable": "~1.3.0",
-    "micro-event": "git@github.com:jeromeetienne/microevent.js.git#75a0b6f92dc97bd37f753558c3fbfdacb61a79fc"
+    "micro-event": "git@github.com:jeromeetienne/microevent.js.git#75a0b6f92dc97bd37f753558c3fbfdacb61a79fc",
+    "superagent": "~0.21.0"
   }
 }
