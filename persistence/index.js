@@ -3,11 +3,18 @@ var bodyParser = require('body-parser')
 var transactor = require('./transactor')
 var dataStore = require('./dataStore')
 
+var allowCrossDomain = function(req,res,next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+}
+
 var app = express()
-app.use(bodyParser.text())
+app.use(bodyParser.json())
+app.use(allowCrossDomain)
 
 app.post('/transact', function (req, res) {
-  transactor.add('payload')
+  transactor.add(req.body.payload)
   res.send('transaction added')
 })
 
