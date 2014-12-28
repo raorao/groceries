@@ -14,3 +14,7 @@ exports.status = function() {
     console.log('most recent transactionKey', reply)
   })
 }
+
+exports.getSnapshot = function(callback) {
+
+}

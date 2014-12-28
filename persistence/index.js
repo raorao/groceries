@@ -19,8 +19,11 @@ app.post('/transact', function (req, res) {
 })
 
 app.get('/snapshot', function(req, res) {
-  dataStore.status()
-  res.send('snapshot printed')
+  dataStore.getSnapshot(req.query.id, function(id, contents) {
+    res.send( JSON.stringify({id: id, contents: contents}) )
+  })
+  console.log('server pinged with ' + req.query.id)
+  res.send('successful response')
 })
 
 var server = app.listen(3000, function () {
