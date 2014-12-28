@@ -4,5 +4,6 @@ var print = db.print
 
 exports.add = function(payload) {
   var key = new Date().getTime();
-  client.set(key, payload, print)
+  client.hset('transactions', key, payload, print)
+  client.rpush('transactionKeys', key, print)
 }

@@ -19,7 +19,7 @@ app.post('/transact', function (req, res) {
 })
 
 app.get('/snapshot', function(req, res) {
-  dataStore.all()
+  dataStore.status()
   res.send('snapshot printed')
 })
 
