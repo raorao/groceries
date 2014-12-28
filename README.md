@@ -13,6 +13,7 @@ To launch the front-end:
   $ cd app
   $ bower install
   $ http-server index.js -p 8080
+```
 
 To launch redis:
 ```bash
