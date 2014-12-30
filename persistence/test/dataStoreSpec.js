@@ -7,9 +7,10 @@ var UPDATE_TRANSACTION = {type: 'update', id: 1, attributes: { value: 'new value
 var DELETE_TRANSACTION = {type: 'delete', id: 1}
 
 describe('generateSnapshot', function() {
-  var transactionKeys, transactions, expected;
+  var transactionKeys, transactions;
 
   var assertSnapshotEqual = function(expected) {
+    for (var key in transactions) { transactions[key] = JSON.stringify(transactions[key]) }
     assert.deepEqual(expected, dataStore.generateSnapshot(transactions, transactionKeys))
   }
 

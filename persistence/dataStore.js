@@ -1,20 +1,6 @@
 var db = require('./db')
 var client = db.client
 
-exports.status = function() {
-  client.keys('*',function(err, reply) {
-    console.log('all keys', reply)
-  })
-
-  client.hgetall('transactions', function(err,reply) {
-    console.log('all transactions', reply)
-  })
-
-  client.lrange('transactionKeys', -1, -1, function(err, reply) {
-    console.log('most recent transactionKey', reply)
-  })
-}
-
 var defaultContents = function() {
   return { highestId: 0, items:[] }
 }
@@ -56,9 +42,9 @@ var deleteItem = function(transaction, contents) {
   return contents
 }
 
-exports.generateSnapshot = function(transactions, keyList) {
+var generateSnapshot = function(transactions, keyList) {
   var contents = keyList.reduceRight(function(contents,id) {
-    var transaction = transactions[id];
+    var transaction = JSON.parse(transactions[id]);
     switch (transaction.type) {
       case 'create':
         return createItem(transaction,contents);
@@ -77,4 +63,29 @@ exports.generateSnapshot = function(transactions, keyList) {
   }, defaultContents() )
 
   return contents
+}
+
+exports.generateSnapshot = generateSnapshot;
+
+exports.status = function() {
+  client.keys('*',function(err, reply) {
+    console.log('all keys', reply)
+  })
+
+  client.hgetall('transactions', function(err,reply) {
+    console.log('all transactions', reply)
+  })
+
+  client.lrange('transactionKeys', -1, -1, function(err, reply) {
+    console.log('most recent transactionKey', reply)
+  })
+}
+
+
+exports.fetchSnapshot = function(callback) {
+  client.lrange('transactionKeys', 0, -1, function(err, keyList) {
+    client.hgetall('transactions', function(err,transactions) {
+      callback( generateSnapshot(transactions,keyList) )
+    })
+  })
 }
