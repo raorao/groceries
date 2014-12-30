@@ -16,6 +16,7 @@
   "homepage": "https://github.com/raorao/groceries",
   "dependencies": {
     "express": "^4.10.6",
+    "mocha": "^2.1.0",
     "redis": "^0.12.1"
   }
 }
