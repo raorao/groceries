@@ -68,38 +68,40 @@ var fetchLastTransactionId = function(keys) {
   return key ? key : '0'
 }
 
-exports.generateSnapshot = generateSnapshot;
-
-exports.status = function() {
-  client.keys('*',function(err, reply) {
-    console.log('all keys', reply)
-  })
-
-  client.hgetall('transactions', function(err,reply) {
-    console.log('all transactions', reply)
-  })
-
-  client.lrange('transactionKeys', -1, -1, function(err, reply) {
-    console.log('most recent transactionKey', reply)
-  })
+var fetchTransactionKeys = function(callback) {
+  client.lrange('transactionKeys', 0, -1, function(err,payload) { callback(payload) })
 }
 
+var fetchTransactions = function(callback) {
+  client.hgetall('transactions', function(err,payload) { callback(payload) })
+}
+
+var fetchSnapshotFromCache = function(id, callback) {
+  client.hget('snapshotCache', id, function(err,payload) { callback(payload) })
+}
+
+var cacheSnapshot = function(id, payload) {
+  client.hset('snapshotCache', id, payload)
+}
+
+exports.generateSnapshot = generateSnapshot;
+
 exports.fetchSnapshot = function(clientId, callback) {
-  client.lrange('transactionKeys', 0, -1, function(err, keyList) {
+  fetchTransactionKeys(function(keyList) {
     var lastTransactionId = fetchLastTransactionId(keyList)
     if(lastTransactionId === clientId) {
       callback(false)
     } else {
-      client.hget('snapshotCache', lastTransactionId, function(err, payload) {
+      fetchSnapshotFromCache(lastTransactionId, function(err, payload) {
         if (payload) {
           callback(true, payload)
         } else {
-          client.hgetall('transactions', function(err,transactions) {
+          fetchTransactions(function(transactions) {
             var contents = generateSnapshot(transactions,keyList)
             var payload = JSON.stringify({contents: contents, lastTransactionId: lastTransactionId})
-            client.hset('snapshotCache', lastTransactionId, payload)
-              callback(true, payload)
-            })
+            cacheSnapshot(lastTransactionId, payload)
+            callback(true, payload)
+          })
         }
       })
     }
