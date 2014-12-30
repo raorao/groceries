@@ -21,8 +21,18 @@ var defaultContents = function() {
 
 var createItem = function(transaction, contents) {
   var item = transaction.item
-  contents.items.push(item);
-  contents.highestId = Math.max(contents.highestId,item.id);
+  var highestId = contents.highestId
+  var currentIds  = contents.items.map(function(item) { return item.id })
+
+  if (currentIds.indexOf(item.id) === -1) {
+    contents.items.push(item);
+    contents.highestId = Math.max(highestId,item.id);
+  } else {
+    item.id = ++highestId;
+    contents.items.push(item);
+    contents.highestId = item.id;
+  }
+
   return contents
 }
 
