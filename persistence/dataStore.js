@@ -63,7 +63,7 @@ var generateSnapshot = function(transactions, keyList) {
   return contents
 }
 
-var lastTransactionId = function(keys) {
+var fetchLastTransactionId = function(keys) {
   var key = keys.slice(-1)[0]
   return key ? key : '0'
 }
@@ -84,11 +84,16 @@ exports.status = function() {
   })
 }
 
-
-exports.fetchSnapshot = function(callback) {
+exports.fetchSnapshot = function(clientId, callback) {
   client.lrange('transactionKeys', 0, -1, function(err, keyList) {
-    client.hgetall('transactions', function(err,transactions) {
-      callback( generateSnapshot(transactions,keyList), lastTransactionId(keyList) )
-    })
+    var lastTransactionId = fetchLastTransactionId(keyList)
+    if(lastTransactionId === clientId) {
+      callback(false)
+    } else {
+      client.hgetall('transactions', function(err,transactions) {
+        callback(true, generateSnapshot(transactions,keyList), lastTransactionId)
+      })
+    }
+
   })
 }

@@ -19,8 +19,12 @@ app.post('/transact', function (req, res) {
 })
 
 app.get('/snapshot', function(req, res) {
-  dataStore.fetchSnapshot(function(contents, id) {
-    res.send( JSON.stringify({contents: contents, lastTransactionId: id}) )
+  dataStore.fetchSnapshot(req.query.id, function(modified, contents, id) {
+    if (modified) {
+      res.send( JSON.stringify({contents: contents, lastTransactionId: id}) )
+    } else {
+      res.status(304).end()
+    }
   })
 })
 

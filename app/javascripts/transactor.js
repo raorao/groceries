@@ -1,11 +1,8 @@
 Transactor = (function(request) {
   var makeRequest = function(payload) {
-    // eventually will include logic to communicate with back end
     request.post('http://0.0.0.0:3000/transact')
-      .send({payload: JSON.stringify(payload) })
-      .end(function(error,res) {
-        console.log('server responds with', res)
-      })
+      .send({ payload: JSON.stringify(payload) })
+      .end()
   }
   return {
     update: function(id, attributes) {
