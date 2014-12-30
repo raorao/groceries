@@ -4,6 +4,7 @@ var dataStore = require('../dataStore')
 var ITEM = { id: 1, completed: false, value: 'a gallon of milk'}
 var CREATE_TRANSACTION = {type: 'create', item: ITEM }
 var UPDATE_TRANSACTION = {type: 'update', id: 1, attributes: { value: 'new value' } }
+var DELETE_TRANSACTION = {type: 'delete', id: 1}
 
 describe('generateSnapshot', function() {
   var transactionKeys, transactions, expected;
@@ -25,10 +26,16 @@ describe('generateSnapshot', function() {
   })
 
   it('should handle a transaction of type update', function() {
-    transactionKeys = ['1111', '2222']
+    transactionKeys = ['2222', '1111']
     transactions = { '1111': CREATE_TRANSACTION, '2222': UPDATE_TRANSACTION }
     updatedItem = { id: ITEM.id, completed: ITEM.completed, value: UPDATE_TRANSACTION.attributes.value }
     assertSnapshotEqual({ highestId: 1, items: [updatedItem]})
+  })
+
+  it('should handle a transaction of type delete', function() {
+    transactionKeys = ['2222', '1111']
+    transactions = { '1111': CREATE_TRANSACTION, '2222': DELETE_TRANSACTION }
+    assertSnapshotEqual({ highestId: 1, items: []})
   })
 })
 
