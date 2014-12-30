@@ -63,7 +63,7 @@ var generateSnapshot = function(transactions, keyList) {
   return contents
 }
 
-var fetchLastTransactionId = function(keys) {
+var calculateLastTransactionId = function(keys) {
   var key = keys.slice(-1)[0]
   return key ? key : '0'
 }
@@ -84,26 +84,30 @@ var cacheSnapshot = function(id, payload) {
   client.hset('snapshotCache', id, payload)
 }
 
+var returnNewSnapshot = function(id,keyList,callback) {
+  fetchSnapshotFromCache(id, function(snapshot) {
+    if (snapshot) {
+      callback(true, snapshot)
+    } else {
+      fetchTransactions(function(transactions) {
+        var contents = generateSnapshot(transactions,keyList)
+        var payload = JSON.stringify({contents: contents, lastTransactionId: id})
+        cacheSnapshot(id, payload)
+        callback(true, payload)
+      })
+    }
+  })
+}
+
 exports.generateSnapshot = generateSnapshot;
 
 exports.fetchSnapshot = function(clientId, callback) {
   fetchTransactionKeys(function(keyList) {
-    var lastTransactionId = fetchLastTransactionId(keyList)
+    var lastTransactionId = calculateLastTransactionId(keyList)
     if(lastTransactionId === clientId) {
       callback(false)
     } else {
-      fetchSnapshotFromCache(lastTransactionId, function(err, payload) {
-        if (payload) {
-          callback(true, payload)
-        } else {
-          fetchTransactions(function(transactions) {
-            var contents = generateSnapshot(transactions,keyList)
-            var payload = JSON.stringify({contents: contents, lastTransactionId: lastTransactionId})
-            cacheSnapshot(lastTransactionId, payload)
-            callback(true, payload)
-          })
-        }
-      })
+      returnNewSnapshot(lastTransactionId,keyList,callback)
     }
 
   })
