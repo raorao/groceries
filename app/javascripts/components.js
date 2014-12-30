@@ -13,7 +13,7 @@ Item = (function() {
   return React.createClass({
     mixins: [ReactElementMixin],
     handleCompletion: function() {
-      AppAction.update(this.props.id, {completed: !this.props.completed} );
+      AppAction.update(this.props.id, {completed: !this.props.completed});
     },
 
     handleDeletion: function() {
@@ -21,8 +21,8 @@ Item = (function() {
     },
 
     handleEdit: function() {
-      var itemValue = this.refs.userInput.getDOMNode().value;
-      AppAction.update(this.props.id, {value: itemValue} );
+      var itemValue = this.refs.userInput.getDOMNode().innerText;
+      AppAction.update(this.props.id, {value: itemValue});
     },
 
     render: function() {
@@ -31,7 +31,11 @@ Item = (function() {
       return (
         this.li({className: 'item ' + klass}, [
           this.span({ onClick: this.handleCompletion },'complete'),
-          this.input({ onBlur: this.handleEdit, ref: 'userInput', defaultValue: this.props.value }),
+          this.span({ onBlur: this.handleEdit,
+                      contentEditable: true,
+                      ref: 'userInput',
+                      dangerouslySetInnerHTML: { __html: this.props.value }
+                    }),
           this.span({ onClick: this.handleDeletion },'delete'),
 
         ])

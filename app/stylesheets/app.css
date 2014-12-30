@@ -1,3 +1,7 @@
 body {
   background-color: red;
 }
+
+.item span {
+  margin: 10px;
+}
