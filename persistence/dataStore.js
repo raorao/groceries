@@ -20,7 +20,7 @@ var defaultContents = function() {
 }
 
 exports.generateSnapshot = function(transactions, keyList) {
-  var contents = keyList.reduce(function(contents,id) {
+  var contents = keyList.reduceRight(function(contents,id) {
 
     var transaction = transactions[id];
     switch (transaction.type) {
@@ -37,6 +37,13 @@ exports.generateSnapshot = function(transactions, keyList) {
             for (var key in attributes ) { item[key] = attributes[key]; }
           }
           return item
+        })
+        contents.items = items
+        return contents
+        break;
+      case 'delete':
+        var items = contents.items.filter(function(item) {
+          return item.id !== transaction.id
         })
         contents.items = items
         return contents
