@@ -27,20 +27,20 @@ describe('generateSnapshot', function() {
   })
 
   it('should handle a transaction of type update', function() {
-    transactionKeys = ['2222', '1111']
+    transactionKeys = ['1111', '2222']
     transactions = { '1111': CREATE_TRANSACTION, '2222': UPDATE_TRANSACTION }
     updatedItem = { id: ITEM.id, completed: ITEM.completed, value: UPDATE_TRANSACTION.attributes.value }
     assertSnapshotEqual({ highestId: 1, items: [updatedItem]})
   })
 
   it('should handle a transaction of type delete', function() {
-    transactionKeys = ['2222', '1111']
+    transactionKeys = ['1111', '2222']
     transactions = { '1111': CREATE_TRANSACTION, '2222': DELETE_TRANSACTION }
     assertSnapshotEqual({ highestId: 1, items: []})
   })
 
   it('should handle two conflicting creation transactions', function() {
-    transactionKeys = ['2222', '1111']
+    transactionKeys = ['1111', '2222']
     transactions = {
         '1111': {type: 'create', item: { id: 1, completed: false, value: 'a gallon of milk'} },
         '2222': {type: 'create', item: { id: 1, completed: false, value: 'a stick of butter'} }
@@ -54,7 +54,7 @@ describe('generateSnapshot', function() {
   })
 
   it('should handle two conflicting deletion transactions', function() {
-    transactionKeys = ['3333', '2222', '1111']
+    transactionKeys = ['1111', '2222', '3333']
     transactions = {
         '1111': {type: 'create', item: { id: 1, completed: false, value: 'a gallon of milk'} },
         '2222': {type: 'delete', id: 1},
@@ -64,7 +64,7 @@ describe('generateSnapshot', function() {
   })
 
   it('should handle a series of transactions (integration-y)', function() {
-    transactionKeys = ['5','4','3','2','1']
+    transactionKeys = ['1','2','3','4','5']
     transactions = {
       '1': { type: 'create', item: { id: 1, completed: false, value: 'a gallon of milk'} },
       '2': { type: 'update', id: 1, attributes: { completed: true } },

@@ -43,7 +43,7 @@ var deleteItem = function(transaction, contents) {
 }
 
 var generateSnapshot = function(transactions, keyList) {
-  var contents = keyList.reduceRight(function(contents,id) {
+  var contents = keyList.reduce(function(contents,id) {
     var transaction = JSON.parse(transactions[id]);
     switch (transaction.type) {
       case 'create':
@@ -57,8 +57,6 @@ var generateSnapshot = function(transactions, keyList) {
         break;
       default:
         throw new Error('unrecognized transaction type ' + transaction.type )
-
-
     }
   }, defaultContents() )
 
