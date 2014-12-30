@@ -74,8 +74,7 @@ Store = (function() {
     },
 
     load: function(newContents) {
-      console.log('loading new contents', newContents)
-      // set(newContents);
+      set(newContents);
     },
   }
 })();

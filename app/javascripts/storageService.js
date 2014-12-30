@@ -2,13 +2,11 @@
 
 StorageService = (function(request) {
 
-  var lastTransactionId = 0;
-
   var poll = function() {
     request.get('http://0.0.0.0:3000/snapshot')
-      .query({id: lastTransactionId})
       .end(function(error,res) {
-        console.log('server responds with', res)
+        var payload = JSON.parse(res.text)
+        AppAction.load(payload.contents)
       })
   };
 
