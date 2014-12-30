@@ -38,6 +38,20 @@ describe('generateSnapshot', function() {
     assertSnapshotEqual({ highestId: 1, items: []})
   })
 
+  it('should handle two conflicting creation transactions', function() {
+    transactionKeys = ['2222', '1111']
+    transactions = {
+        '1111': {type: 'create', item: { id: 1, completed: false, value: 'a gallon of milk'} },
+        '2222': {type: 'create', item: { id: 1, completed: false, value: 'a stick of butter'} }
+      }
+    assertSnapshotEqual({ highestId: 2,
+                          items: [
+                            { id: 1, completed: false, value: 'a gallon of milk'},
+                            { id: 2, completed: false, value: 'a stick of butter'}
+                          ]
+                        })
+  })
+
   it('should handle a series of transactions (integration-y)', function() {
     transactionKeys = ['5','4','3','2','1']
     transactions = {
