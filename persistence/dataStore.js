@@ -15,6 +15,8 @@ exports.status = function() {
   })
 }
 
-exports.getSnapshot = function(callback) {
+var DEFAULT_CONTENTS = { highestId: 0, items:[] }
 
+exports.generateSnapshot = function(transactions, keyList) {
+  return DEFAULT_CONTENTS
 }
