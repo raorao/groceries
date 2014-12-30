@@ -19,35 +19,50 @@ var defaultContents = function() {
   return { highestId: 0, items:[] }
 }
 
+var createItem = function(transaction, contents) {
+  var item = transaction.item
+  contents.items.push(item);
+  contents.highestId = Math.max(contents.highestId,item.id);
+  return contents
+}
+
+var updateItem = function(transaction, contents) {
+  var attributes = transaction.attributes
+  var items = contents.items.map(function(item) {
+    if (item.id === transaction.id) {
+      for (var key in attributes ) { item[key] = attributes[key]; }
+    }
+    return item
+  })
+  contents.items = items
+  return contents
+}
+
+var deleteItem = function(transaction, contents) {
+  var items = contents.items.filter(function(item) {
+    return item.id !== transaction.id
+  })
+  contents.items = items
+  return contents
+}
+
 exports.generateSnapshot = function(transactions, keyList) {
   var contents = keyList.reduceRight(function(contents,id) {
-
     var transaction = transactions[id];
     switch (transaction.type) {
       case 'create':
-        var item = transaction.item
-        contents.items.push(item);
-        contents.highestId = Math.max(contents.highestId,item.id);
-        return contents
+        return createItem(transaction,contents);
         break;
       case 'update':
-        var attributes = transaction.attributes
-        var items = contents.items.map(function(item) {
-          if (item.id === transaction.id) {
-            for (var key in attributes ) { item[key] = attributes[key]; }
-          }
-          return item
-        })
-        contents.items = items
-        return contents
+        return updateItem(transaction,contents);
         break;
       case 'delete':
-        var items = contents.items.filter(function(item) {
-          return item.id !== transaction.id
-        })
-        contents.items = items
-        return contents
+        return deleteItem(transaction,contents);
         break;
+      default:
+        throw new Error('unrecognized transaction type ' + transaction.type )
+
+
     }
   }, defaultContents() )
 

@@ -37,5 +37,17 @@ describe('generateSnapshot', function() {
     transactions = { '1111': CREATE_TRANSACTION, '2222': DELETE_TRANSACTION }
     assertSnapshotEqual({ highestId: 1, items: []})
   })
+
+  it('should handle a series of transactions (integration-y)', function() {
+    transactionKeys = ['5','4','3','2','1']
+    transactions = {
+      '1': { type: 'create', item: { id: 1, completed: false, value: 'a gallon of milk'} },
+      '2': { type: 'update', id: 1, attributes: { completed: true } },
+      '3': { type: 'create', item: { id: 2, completed: false, value: 'a loaf of bread'} },
+      '4': { type: 'update', id: 1, attributes: { value: 'a stick of butter' } },
+      '5': { type: 'delete', id: 2 }
+    }
+    assertSnapshotEqual({ highestId: 2, items: [{ id: 1, completed: true, value: 'a stick of butter'}] })
+  })
 })
 
