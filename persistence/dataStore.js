@@ -90,8 +90,17 @@ exports.fetchSnapshot = function(clientId, callback) {
     if(lastTransactionId === clientId) {
       callback(false)
     } else {
-      client.hgetall('transactions', function(err,transactions) {
-        callback(true, generateSnapshot(transactions,keyList), lastTransactionId)
+      client.hget('snapshotCache', lastTransactionId, function(err, payload) {
+        if (payload) {
+          callback(true, payload)
+        } else {
+          client.hgetall('transactions', function(err,transactions) {
+            var contents = generateSnapshot(transactions,keyList)
+            var payload = JSON.stringify({contents: contents, lastTransactionId: lastTransactionId})
+            client.hset('snapshotCache', lastTransactionId, payload)
+              callback(true, payload)
+            })
+        }
       })
     }
 
