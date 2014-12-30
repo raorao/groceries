@@ -52,6 +52,16 @@ describe('generateSnapshot', function() {
                         })
   })
 
+  it('should handle two conflicting deletion transactions', function() {
+    transactionKeys = ['3333', '2222', '1111']
+    transactions = {
+        '1111': {type: 'create', item: { id: 1, completed: false, value: 'a gallon of milk'} },
+        '2222': {type: 'delete', id: 1},
+        '3333': {type: 'delete', id: 1}
+      }
+    assertSnapshotEqual({ highestId: 1, items: [] })
+  })
+
   it('should handle a series of transactions (integration-y)', function() {
     transactionKeys = ['5','4','3','2','1']
     transactions = {
