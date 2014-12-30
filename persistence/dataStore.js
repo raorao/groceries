@@ -18,5 +18,17 @@ exports.status = function() {
 var DEFAULT_CONTENTS = { highestId: 0, items:[] }
 
 exports.generateSnapshot = function(transactions, keyList) {
-  return DEFAULT_CONTENTS
+  var contents = keyList.reduce(function(contents,id) {
+
+    var transaction = transactions[id];
+    console.log(transactions)
+    // create transaction
+    var item = transaction.item
+    contents.items.push(item);
+    contents.highestId = Math.max(contents.highestId,item.id);
+    return contents
+
+  }, DEFAULT_CONTENTS)
+
+  return contents
 }
