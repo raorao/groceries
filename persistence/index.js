@@ -1,7 +1,7 @@
 var express = require('express')
 var bodyParser = require('body-parser')
-var transactor = require('./transactor')
-var dataStore = require('./dataStore')
+var transactor = require('./db/transactor')
+var dataStore = require('./db/dataStore')
 
 var allowCrossDomain = function(req,res,next) {
   res.header("Access-Control-Allow-Origin", "*")

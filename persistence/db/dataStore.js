@@ -1,4 +1,4 @@
-var db = require('./db')
+var db = require('./client')
 var client = db.client
 
 var defaultContents = function() {
