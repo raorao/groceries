@@ -19,6 +19,7 @@
   "dependencies": {
     "express": "^4.10.6",
     "mocha": "^2.1.0",
-    "redis": "^0.12.1"
+    "redis": "^0.12.1",
+    "body-parser": "*"
   }
 }
