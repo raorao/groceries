@@ -12,6 +12,11 @@ var allowCrossDomain = function(req,res,next) {
 var app = express()
 app.use(bodyParser.json())
 app.use(allowCrossDomain)
+app.use( express.static(__dirname + '/app') );
+
+app.get('/', function (req, res) {
+  res.sendFile(__dirname + '/app/index.html')
+})
 
 app.post('/transact', function (req, res) {
   transactor.add(req.body.payload)
