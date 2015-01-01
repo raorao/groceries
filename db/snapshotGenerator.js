@@ -1,6 +1,3 @@
-var db = require('./db')
-var client = db.client
-
 var defaultContents = function() {
   return { highestId: 0, items:[] }
 }
@@ -42,7 +39,7 @@ var deleteItem = function(transaction, contents) {
   return contents
 }
 
-var generateSnapshot = function(transactions, keyList) {
+var generate = function(transactions, keyList) {
   var contents = keyList.reduce(function(contents,id) {
     var transaction = JSON.parse(transactions[id]);
     switch (transaction.type) {
@@ -63,52 +60,4 @@ var generateSnapshot = function(transactions, keyList) {
   return contents
 }
 
-var calculateLastTransactionId = function(keys) {
-  var key = keys.slice(-1)[0]
-  return key ? key : '0'
-}
-
-var fetchTransactionKeys = function(callback) {
-  client.lrange('transactionKeys', 0, -1, function(err,payload) { callback(payload) })
-}
-
-var fetchTransactions = function(callback) {
-  client.hgetall('transactions', function(err,payload) { callback(payload) })
-}
-
-var fetchSnapshotFromCache = function(id, callback) {
-  client.hget('snapshotCache', id, function(err,payload) { callback(payload) })
-}
-
-var cacheSnapshot = function(id, payload) {
-  client.hset('snapshotCache', id, payload)
-}
-
-var returnNewSnapshot = function(id,keyList,callback) {
-  fetchSnapshotFromCache(id, function(snapshot) {
-    if (snapshot) {
-      callback(true, snapshot)
-    } else {
-      fetchTransactions(function(transactions) {
-        var contents = generateSnapshot(transactions,keyList)
-        var payload = JSON.stringify({contents: contents, lastTransactionId: id})
-        cacheSnapshot(id, payload)
-        callback(true, payload)
-      })
-    }
-  })
-}
-
-exports.generateSnapshot = generateSnapshot;
-
-exports.fetchSnapshot = function(clientId, callback) {
-  fetchTransactionKeys(function(keyList) {
-    var lastTransactionId = calculateLastTransactionId(keyList)
-    if(lastTransactionId === clientId) {
-      callback(false)
-    } else {
-      returnNewSnapshot(lastTransactionId,keyList,callback)
-    }
-
-  })
-}
+exports.generate = generate;

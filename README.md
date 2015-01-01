@@ -6,22 +6,20 @@ Front-end is built using React.js and the Flux pattern. Persistence layer termin
 
 ### Usage
 
-Requires [bower](http://bower.io/), [npm](https://www.npmjs.com/), and [redis](http://redis.io/). I recommend you use a simple command-line tool like [http-server](https://www.npmjs.com/package/http-server) to host in development.
-
-To launch the front-end:
-```bash
-  $ cd app
-  $ bower install
-  $ http-server index.js -p 8080
-```
+Requires [bower](http://bower.io/), [npm](https://www.npmjs.com/), and [redis](http://redis.io/).
 
 To launch redis:
 ```bash
   $ redis-server --port 6379
 ```
 
-To launch the back-end:
+To install dependencies:
 ```bash
-  $ cd persistence
+  $ npm install
+  $ bower install
   $ node index.js
 ```
+
+The site should now be visible at http://0.0.0.0:3000/ .
+
+
