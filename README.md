@@ -2,7 +2,7 @@
 
 A real-time, collaborative grocery list.
 
-Front-end is built using React.js and the Flux pattern. Persistence layer terminology stolen from [Datomic](http://www.datomic.com/), which the back-end architecture will eventually mimic.
+Front-end is built using React.js and the Flux pattern. Persistence layer terminology stolen from [Datomic](http://www.datomic.com/), which the back-end architecture roughly mimics.
 
 ### Usage
 
@@ -13,11 +13,11 @@ To launch redis:
   $ redis-server --port 6379
 ```
 
-To install dependencies:
+To install dependencies and launch application:
 ```bash
   $ npm install
   $ bower install
-  $ node index.js
+  $ npm start
 ```
 
 The site should now be visible at http://0.0.0.0:3000/ .
