@@ -3,15 +3,8 @@ var bodyParser = require('body-parser')
 var transactor = require('./db/transactor')
 var dataStore = require('./db/dataStore')
 
-var allowCrossDomain = function(req,res,next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-  next()
-}
-
 var app = express()
 app.use(bodyParser.json())
-app.use(allowCrossDomain)
 app.use( express.static(__dirname + '/app') );
 
 app.get('/', function (req, res) {
