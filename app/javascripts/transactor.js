@@ -1,6 +1,6 @@
 Transactor = (function(request) {
   var makeRequest = function(payload) {
-    request.post('http://0.0.0.0:3000/transact')
+    request.post('/transact')
       .send({ payload: JSON.stringify(payload) })
       .end()
   }
