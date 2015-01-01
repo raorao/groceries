@@ -1,5 +1,4 @@
-var db = require('./client')
-var client = db.client
+var client = require('./client')
 
 var defaultContents = function() {
   return { highestId: 0, items:[] }
@@ -63,26 +62,17 @@ var generateSnapshot = function(transactions, keyList) {
   return contents
 }
 
+exports.generateSnapshot = generateSnapshot;
+
 var calculateLastTransactionId = function(keys) {
   var key = keys.slice(-1)[0]
   return key ? key : '0'
 }
 
-var fetchTransactionKeys = function(callback) {
-  client.lrange('transactionKeys', 0, -1, function(err,payload) { callback(payload) })
-}
-
-var fetchTransactions = function(callback) {
-  client.hgetall('transactions', function(err,payload) { callback(payload) })
-}
-
-var fetchSnapshotFromCache = function(id, callback) {
-  client.hget('snapshotCache', id, function(err,payload) { callback(payload) })
-}
-
-var cacheSnapshot = function(id, payload) {
-  client.hset('snapshotCache', id, payload)
-}
+fetchTransactionKeys = client.fetchTransactionKeys;
+fetchTransactions = client.fetchTransactions;
+fetchSnapshotFromCache = client.fetchSnapshotFromCache;
+cacheSnapshot = client.cacheSnapshot;
 
 var returnNewSnapshot = function(id,keyList,callback) {
   fetchSnapshotFromCache(id, function(snapshot) {
@@ -99,7 +89,7 @@ var returnNewSnapshot = function(id,keyList,callback) {
   })
 }
 
-exports.generateSnapshot = generateSnapshot;
+
 
 exports.fetchSnapshot = function(clientId, callback) {
   fetchTransactionKeys(function(keyList) {
