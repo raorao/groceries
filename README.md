@@ -6,7 +6,7 @@ Front-end is built using React.js and the Flux pattern. Persistence layer termin
 
 ### Usage
 
-Requires [bower](http://bower.io/), [npm](https://www.npmjs.com/), and [redis](http://redis.io/).
+Requires [npm](https://www.npmjs.com/), and [redis](http://redis.io/).
 
 To launch redis:
 ```bash
@@ -16,7 +16,6 @@ To launch redis:
 To install dependencies and launch application:
 ```bash
   $ npm install
-  $ bower install
   $ npm start
 ```
 
