@@ -1,5 +1,5 @@
 var assert = require('assert')
-var dataStore = require('../dataStore')
+var generate = require('../db/snapshotGenerator').generate
 
 var ITEM = { id: 1, completed: false, value: 'a gallon of milk'}
 var CREATE_TRANSACTION = {type: 'create', item: ITEM }
@@ -11,7 +11,7 @@ describe('generateSnapshot', function() {
 
   var assertSnapshotEqual = function(expected) {
     for (var key in transactions) { transactions[key] = JSON.stringify(transactions[key]) }
-    assert.deepEqual(expected, dataStore.generateSnapshot(transactions, transactionKeys))
+    assert.deepEqual(expected, generate(transactions, transactionKeys))
   }
 
   it('should return the default value if there are no transactions', function() {
