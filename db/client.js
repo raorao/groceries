@@ -1,7 +1,16 @@
 module.exports = (function() {
   var redis = require("redis")
 
-  client = redis.createClient(6379, '127.0.0.1', {})
+
+  var heroku_url = process.env.REDISTOGO_URL
+
+  if(heroku_url) {
+    var rtg   = require("url").parse(heroku_url);
+    var client = redis.createClient(rtg.port, rtg.hostname);
+    client.auth(rtg.auth.split(":")[1]);
+  } else {
+    client = redis.createClient(6379, '127.0.0.1', {})
+  }
 
   client.on('ready', function() {
     console.log('redis is ready')
