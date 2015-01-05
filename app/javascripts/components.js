@@ -6,7 +6,8 @@ ReactElementMixin = {
   div: React.createFactory('div'),
   input: React.createFactory('input'),
   form: React.createFactory('form'),
-  span: React.createFactory('span')
+  span: React.createFactory('span'),
+  h1: React.createFactory('h1')
 };
 
 Item = React.createClass({
@@ -29,13 +30,14 @@ Item = React.createClass({
 
     return (
       this.li({className: 'item ' + klass}, [
-        this.span({ onClick: this.handleCompletion },'complete'),
-        this.span({ onBlur: this.handleEdit,
+        this.span({ onClick: this.handleCompletion, className: 'complete-button' },'\u2714'),
+        this.div({ onBlur: this.handleEdit,
                     contentEditable: true,
                     ref: 'userInput',
+                    className: 'value',
                     dangerouslySetInnerHTML: { __html: this.props.value }
                   }),
-        this.span({ onClick: this.handleDeletion },'delete'),
+        this.span({ onClick: this.handleDeletion, className: 'delete-button' },'\u2718'),
 
       ])
     )
@@ -71,15 +73,15 @@ Create = React.createClass({
   mixins: [ReactElementMixin],
   submitHandler: function(event) {
     event.preventDefault();
-    var itemValue = this.refs.userInput.getDOMNode().value;
-    AppAction.create(itemValue);
+    var node =  this.refs.userInput.getDOMNode();
+    AppAction.create(node.value);
+    node.value = ''
   },
 
   render: function() {
     return (
-      this.form({id: 'create', onSubmit: this.submitHandler}, [
-        this.input({type: 'text', ref: 'userInput'}),
-        this.input({ type: 'submit' })
+      this.form({onSubmit: this.submitHandler}, [
+        this.input({id: 'create', type: 'text', ref: 'userInput', placeholder: 'Add something to the list!'})
       ])
     )
   }
@@ -90,7 +92,13 @@ Page = React.createClass({
   mixins: [ReactElementMixin],
   render: function() {
     return (
-      this.div(null,[ Create(), List() ])
+      this.div(null,
+        this.h1(null, 'groceries'),
+        this.div({id: 'app'},
+          Create(),
+          List()
+        )
+      )
     )
   }
 });
