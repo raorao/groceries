@@ -26,6 +26,28 @@ form {
   border-right:   1px  solid #7d82b0;
   border-bottom:  2px  solid #7d82b0;
   border-top:     15px solid #684f91;
+  text-align: center;
+}
+
+
+#create::-webkit-input-placeholder {
+  color: #C3C3C4;
+  text-align: center;
+}
+
+#create::-moz-placeholder {  /* Firefox 19+ */
+   color: #C3C3C4;
+   text-align: center;
+}
+
+#create:focus::-webkit-input-placeholder {
+  color: transparent;
+  text-align: center;
+}
+
+#create:focus::-moz-placeholder {  /* Firefox 19+ */
+   color: transparent;
+   text-align: center;
 }
 
 #list {
