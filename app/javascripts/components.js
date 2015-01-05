@@ -29,13 +29,14 @@ Item = React.createClass({
 
     return (
       this.li({className: 'item ' + klass}, [
-        this.span({ onClick: this.handleCompletion },'complete'),
-        this.span({ onBlur: this.handleEdit,
+        this.span({ onClick: this.handleCompletion, className: 'complete-button' },'\u2714'),
+        this.div({ onBlur: this.handleEdit,
                     contentEditable: true,
                     ref: 'userInput',
+                    className: 'value',
                     dangerouslySetInnerHTML: { __html: this.props.value }
                   }),
-        this.span({ onClick: this.handleDeletion },'delete'),
+        this.span({ onClick: this.handleDeletion, className: 'delete-button' },'\u2718'),
 
       ])
     )
