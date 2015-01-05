@@ -77,9 +77,8 @@ Create = React.createClass({
 
   render: function() {
     return (
-      this.form({id: 'create', onSubmit: this.submitHandler}, [
-        this.input({type: 'text', ref: 'userInput'}),
-        this.input({ type: 'submit' })
+      this.form({onSubmit: this.submitHandler}, [
+        this.input({id: 'create', type: 'text', ref: 'userInput', placeholder: 'Add something to the list!'})
       ])
     )
   }

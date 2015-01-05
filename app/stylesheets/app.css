@@ -7,7 +7,22 @@ body {
   margin: 40px auto;
   min-height: 200px;
   box-shadow: 0 0 5px #684F91;
+  font-family: 'Titillium Web', 'Arial', sans-serif;
+  font-size: 20px;
+  font-color: #080D3B;
+
 }
+
+#create {
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px 30px;
+  border: 1px solid #7d82b0;
+  border-top: 15px solid #684f91;
+}
+
 .item span {
   margin: 10px;
 }
+
