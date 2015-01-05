@@ -2,7 +2,7 @@
 
 A real-time, collaborative grocery list.
 
-Front-end is built using React.js and the Flux pattern. Persistence layer terminology stolen from [Datomic](http://www.datomic.com/), which the back-end architecture roughly mimics.
+Front-end is built using React.js and the Flux pattern. Persistence layer terminology stolen from [Datomic](http://www.datomic.com/), which the back-end architecture roughly mimics. [Visit the demo site here](https://graoceries.herokuapp.com/).
 
 ### Usage
 
