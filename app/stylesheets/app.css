@@ -2,12 +2,12 @@ body {
   background: url('/static/debut_light.png')
 }
 
-#container {
-  width: 400px;
+#app {
+  width: 600px;
   margin: 40px auto;
   box-shadow: 0 0 5px #684F91;
   font-family: 'Titillium Web', 'Arial', sans-serif;
-  font-size: 20px;
+  font-size: 35px;
   color: #080D3B;
   background-color: white;
 }
@@ -72,17 +72,18 @@ form {
 
 .item .complete-button {
   position: absolute;
-  left: 10px;
+  left: 20px;
   top: 10px;
 }
 
 .item .value {
-  margin: 0 30px;
+  margin: 0 50px;
+  padding: 0 15px;
 }
 
 .item .delete-button {
   position: absolute;
-  right: 10px;
+  right: 20px;
   top: 10px;
 }
 
