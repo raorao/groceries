@@ -6,7 +6,8 @@ ReactElementMixin = {
   div: React.createFactory('div'),
   input: React.createFactory('input'),
   form: React.createFactory('form'),
-  span: React.createFactory('span')
+  span: React.createFactory('span'),
+  h1: React.createFactory('h1')
 };
 
 Item = React.createClass({
@@ -91,7 +92,13 @@ Page = React.createClass({
   mixins: [ReactElementMixin],
   render: function() {
     return (
-      this.div(null,[ Create(), List() ])
+      this.div(null,
+        this.h1(null, 'groceries'),
+        this.div({id: 'app'},
+          Create(),
+          List()
+        )
+      )
     )
   }
 });

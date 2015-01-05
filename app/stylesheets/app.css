@@ -2,11 +2,21 @@ body {
   background: url('/static/debut_light.png')
 }
 
-#app {
+#container {
   width: 600px;
-  margin: 40px auto;
-  box-shadow: 0 0 5px #684F91;
   font-family: 'Titillium Web', 'Arial', sans-serif;
+  font-size: 40px;
+  text-align: center;
+  margin: 40px auto;
+}
+
+h1 {
+  margin: 20px;
+  color: #7d82b0;
+}
+
+#app {
+  box-shadow: 0 0 5px #684F91;
   font-size: 35px;
   color: #080D3B;
   background-color: white;
@@ -25,7 +35,7 @@ form {
   border-left:    1px  solid #7d82b0;
   border-right:   1px  solid #7d82b0;
   border-bottom:  2px  solid #7d82b0;
-  border-top:     15px solid #684f91;
+  border-top:     15px solid #477187;
   text-align: center;
 }
 
