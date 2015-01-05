@@ -2,6 +2,12 @@ body {
   background: url('/static/debut_light.png')
 }
 
+#container {
+  width: 500px;
+  margin: 40px auto;
+  min-height: 200px;
+  box-shadow: 0 0 5px #684F91;
+}
 .item span {
   margin: 10px;
 }
