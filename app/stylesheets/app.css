@@ -101,3 +101,19 @@ form {
   color: #C3C3C4;
 }
 
+footer {
+  margin-top: 30px;
+  font-family: 'Titillium Web', 'Arial', sans-serif;
+  font-size: 15px;
+  color: #C3C3C4;
+  text-align: center;
+}
+
+footer a, a:visited, a:hover, a:active {
+  color: #C3C3C4;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
