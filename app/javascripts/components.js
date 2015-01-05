@@ -72,8 +72,9 @@ Create = React.createClass({
   mixins: [ReactElementMixin],
   submitHandler: function(event) {
     event.preventDefault();
-    var itemValue = this.refs.userInput.getDOMNode().value;
-    AppAction.create(itemValue);
+    var node =  this.refs.userInput.getDOMNode();
+    AppAction.create(node.value);
+    node.value = ''
   },
 
   render: function() {
