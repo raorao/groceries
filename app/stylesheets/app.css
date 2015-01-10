@@ -84,6 +84,7 @@ form {
   position: absolute;
   left: 20px;
   top: 10px;
+  cursor: pointer;
 }
 
 .item .value {
@@ -95,6 +96,7 @@ form {
   position: absolute;
   right: 20px;
   top: 10px;
+  cursor: pointer;
 }
 
 .item.completed {
