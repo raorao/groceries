@@ -21,4 +21,6 @@ To install dependencies and launch application:
 
 The site should now be visible at http://0.0.0.0:3000/ .
 
+### Deployment
 
+Because heroku has issues with bower, installation of bower modules are done locally. Make sure you have the right heroku credentials and remote, and run the ```./deploy``` script.

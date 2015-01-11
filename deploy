@@ -1,0 +1,15 @@
+git checkout master
+git checkout -b tmp-deploy
+git rebase origin/deploy
+./node_modules/bower/bin/bower install
+git add app/bower_components/
+git commit -m "adds bower components for heroku deployment"
+
+echo ''
+echo 'deploying to heroku'
+git push heroku tmp-deploy:master --force
+
+echo ''
+echo 'cleaning up'
+git checkout master
+git branch -D tmp-deploy
