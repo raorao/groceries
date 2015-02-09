@@ -119,3 +119,20 @@ footer a, a:visited, a:hover, a:active {
 footer a:hover {
   text-decoration: underline;
 }
+
+
+/*media query for all mobile screens*/
+@media only screen and (max-device-width: 420px) {
+  #container {
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 4em;
+  }
+
+  #app {
+    font-size: 1.5em;
+  }
+
+}
