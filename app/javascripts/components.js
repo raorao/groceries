@@ -25,13 +25,21 @@ Item = React.createClass({
     AppAction.update(this.props.id, {value: itemValue});
   },
 
+  handleEnter: function(event) {
+    if (event.keyCode === 13) {
+      event.preventDefault()
+      event.target.blur()
+      this.handleEdit()
+    }
+  },
+
   render: function() {
     var klass = (this.props.completed ? 'completed' : '')
 
     return (
       this.li({className: 'item ' + klass}, [
         this.span({ onClick: this.handleCompletion, className: 'complete-button' },'\u2714'),
-        this.div({ onBlur: this.handleEdit,
+        this.div({ onBlur: this.handleEdit, onKeyDown: this.handleEnter,
                     contentEditable: true,
                     ref: 'userInput',
                     className: 'value',
