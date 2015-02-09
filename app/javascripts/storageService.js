@@ -20,6 +20,7 @@ StorageService = (function(request) {
 
   return {
     connect: function() {
+      poll()
       setInterval(poll,1000);
     },
   }
