@@ -6,8 +6,10 @@ git add app/bower_components/
 git commit -m "adds bower components for heroku deployment"
 
 echo ''
-echo 'deploying to heroku'
-git push heroku tmp-deploy:master --force
+echo 'deploying to production'
+git push prod tmp-deploy:master --force
+echo 'deploying to demo'
+git push demo tmp-deploy:master --force
 
 echo ''
 echo 'cleaning up'
